@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS frogblog_db;
+
+CREATE DATABASE frogblog_db;
