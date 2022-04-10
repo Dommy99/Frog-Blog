@@ -1,0 +1,31 @@
+{{> post-info post}}
+
+{{#if loggedIn}}
+<form class="comment-form">
+  <div>
+    <div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+  </div>
+
+  <div>
+    <button type="submit">add comment</button>
+    <a tabindex="0" id="like-btn" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?">like</a>
+    <a tabindex="0" id="dislike-btn" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?">Dislike</a>
+    
+  </div>
+</form>
+{{/if}}
+
+{{> comments post.comments}}
+
+{{#if loggedIn}}
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/like.js"></script>
+<script src="/javascript/dislike.js"></script>
+{{/if}}
