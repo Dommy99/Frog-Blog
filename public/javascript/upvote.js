@@ -1,13 +1,15 @@
+// Function
 async function upvoteClickHandler(event) {
   event.preventDefault();
 
   const id = window.location.toString().split('/')[
     window.location.toString().split('/').length - 1
   ];
-  const response = await fetch('/api/posts/like', {
+  const response = await fetch('/api/posts/upvote', {
     method: 'PUT',
     body: JSON.stringify({
-      post_id: id
+      post_id: id,
+      vote: true // In downvote it will be false!!!
     }),
     headers: {
       'Content-Type': 'application/json'
@@ -21,4 +23,4 @@ async function upvoteClickHandler(event) {
   }
 }
 
-document.getElementById('like-btn').addEventListener('click', upvoteClickHandler);
+document.querySelector('.upvote-btn').addEventListener('click', upvoteClickHandler);

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const { Post, User, Comment, Like, Dislike } = require('../../models');
+const { Post, User, Comment, Vote } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // get all users
@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
       'post_url',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)'), 'like_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
       'post_url',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)'), 'like_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -90,10 +90,10 @@ router.post('/', withAuth, (req, res) => {
     });
 });
 
-router.put('/like', withAuth, (req, res) => {
+router.put('/upvote', withAuth, (req, res) => {
   // custom static method created in models/Post.js
-  Post.like({ ...req.body, user_id: req.session.user_id }, { Like, Comment, User })
-    .then(updatedLikeData => res.json(updatedLikeData))
+  Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+    .then(updatedVoteData => res.json(updatedVoteData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);

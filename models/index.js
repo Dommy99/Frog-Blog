@@ -1,105 +1,62 @@
 // import all models
 const Post = require('./Post');
 const User = require('./User');
-// const like = require('./like');
+const Vote = require('./Vote');
 const Comment = require('./Comment');
-const Dislike = require('./Dislike');
-const Like = require('./Like');
-
 
 // create associations
-User.hasMany(Post, {
-  foreignKey: 'user_id'
+// When we query the user we get the post
+User.hasMany(Post, { // User can have many posts. Any of the 'has' the foreign key is in the target.(right) 
+    foreignKey: 'user_id' // how it is connected
 });
 
-Post.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
-});
-
-User.belongsToMany(Post, {
-  through: Like,
-  as: 'liked_posts',
-
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+// Query the post to get the user. Post is the source and User is the target
+Post.belongsTo(User, { // A post belongs to a user. belongs to b for backwords and it looks for the foreign key in the posts. 
+    foreignKey: 'user_id' // This is how it it connected
 });
 
 User.belongsToMany(Post, {
-  through: Dislike,
-  as: 'disliked_posts',
-
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+    through: Vote,
+    as: 'voted_posts',
+    foreignKey: 'user_id'
 });
 
 Post.belongsToMany(User, {
-  through: Like,
-  as: 'liked_posts',
-  foreignKey: 'post_id',
-  onDelete: 'SET NULL'
+    through: Vote,
+    as: 'voted_posts',
+    foreignKey: 'post_id'
 });
 
-Post.belongsToMany(User, {
-  through: Dislike,
-  as: 'disliked_posts',
-  foreignKey: 'post_id',
-  onDelete: 'SET NULL'
+Vote.belongsTo(User, {
+    foreignKey: 'user_id'
 });
 
-Like.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+Vote.belongsTo(Post, {
+    foreignKey: 'post_id'
 });
 
-Dislike.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+User.hasMany(Vote, {
+    foreignKey: 'user_id'
 });
 
-Like.belongsTo(Post, {
-  foreignKey: 'post_id',
-  onDelete: 'SET NULL'
-});
-
-Dislike.belongsTo(Post, {
-  foreignKey: 'post_id',
-  onDelete: 'SET NULL'
-});
-
-User.hasMany(Like, {
-  foreignKey: 'user_id'
-});
-
-User.hasMany(Dislike, {
-  foreignKey: 'user_id'
-});
-
-Post.hasMany(Like, {
-  foreignKey: 'post_id'
-});
-
-Post.hasMany(Dislike, {
-  foreignKey: 'post_id'
+Post.hasMany(Vote, {
+    foreignKey: 'post_id'
 });
 
 Comment.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+    foreignKey: 'user_id'
 });
 
 Comment.belongsTo(Post, {
-  foreignKey: 'post_id',
-  onDelete: 'SET NULL'
+    foreignKey: 'post_id'
 });
 
 User.hasMany(Comment, {
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+    foreignKey: 'user_id'
 });
 
 Post.hasMany(Comment, {
-  foreignKey: 'post_id'
+    foreignKey: 'post_id'
 });
 
-module.exports = { User, Post, Like, Dislike, Comment };
+module.exports = { User, Post, Vote, Comment };

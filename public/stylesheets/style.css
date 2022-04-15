@@ -6,13 +6,10 @@ body, html {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: sans-serif; 
+  font-family: sans-serif;
+  color: #333;
 }
-#grad1 {
-  height: 200px;
-  background-color: red; /* For browsers that do not support gradients */
-  background-image: linear-gradient(rgb(25,135,84), yellow);
-}
+
 a {
   text-decoration: none;
   color: #225ca3;
@@ -136,21 +133,12 @@ main {
   margin: -1.5% 0 2% 0;
 }
 
-#like-btn {
+.upvote-btn {
   background-color: #197d0f;
   transition: background-color .1s;
 }
 
-#like-btn:hover {
-  background-color: #1f9c13;
-}
-
-#dislike-btn {
-  background-color: #197d0f;
-  transition: background-color .1s;
-}
-
-#dislike-btn:hover {
+.upvote-btn:hover {
   background-color: #1f9c13;
 }
 
