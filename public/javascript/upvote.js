@@ -9,7 +9,7 @@ async function upvoteClickHandler(event) {
     method: 'PUT',
     body: JSON.stringify({
       post_id: id,
-      vote: true // In downvote it will be false!!!
+      vote: true
     }),
     headers: {
       'Content-Type': 'application/json'
